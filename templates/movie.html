@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Movie Master</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{{ url_for('static',filename='css/bootstrap.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Fonts -->
+    <link href="{{ url_for('static',filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+
+    <!-- Custom Theme CSS -->
+    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
+   
+    <!-- Advanced CSS -->
+    <link href="{{ url_for('static',filename='css/animate.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static',filename='js/lib/owl-carousel/owl.carousel.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static',filename='js/lib/owl-carousel/owl.theme.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static',filename='js/lib/owl-carousel/owl.transitions.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static',filename='js/lib/magnific-popup/magnific-popup.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='js/lib/video/YTPlayer.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='js/lib/flipclock/flipclock.css') }}" rel="stylesheet">
+    
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+
+	<!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top wp1" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="#page-top">
+                    <i class="fa fa-video-camera"></i> Movie <span class="font-light"> Master</span>
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    
+                    <li class="page-scroll">
+                        <a href="#search">Search</a>
+                    </li>
+
+                    {% if not session.logged_in %}
+                    <li class="page-scroll">
+                        <a href="#login">Login</a>
+                    </li>
+                    {% else %}
+                    <li class="page-scroll">
+                        <a href="#favorite">Favorite</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="/logout">Logout</a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+   
+    <!-- Intro Section -->
+    {% if data.type == 'searchMovie' %}
+    <section id="intro">
+    <div class="video-content">  
+    <div class="video-image wp1 delay-1s">
+    	<img src="http://image.tmdb.org/t/p/original{{data.movie.background}}" width=1920 height=1080 alt="">
+    </div>
+    
+    <div style="background: url("img/overlay-pat.png") rgb(255,255,255,0.3)">
+
+        <div class="container-wrapper">
+           <div class="container">
+            <div class="col-md-12 wp1 delay-05s">
+            
+            <div class="intro-info-wrapper">
+<!--                 <div>{{data}}</div>
+ -->            <h1 class="text-center">{{data.movie.name}}  <span class="text-color font-light"></span></h1>
+                
+            </div>
+        	</div>
+			</div><!-- /.intro-info-wrapper -->
+
+            <div class="media-btns buttons page-scroll">
+                <a class="btn btn-default about-btn" href="#about">View about<i class="fa fa-chevron-right"></i></a>
+            </div>
+
+        </div>
+		</div>
+       
+
+        <div class="video-container">
+            <div id="player"></div>
+        </div>
+        </div>
+
+    </section><!-- /#intro --> 
+    
+
+    <!-- About Section -->
+    <section id="about">
+            <div class="more page-scroll" id="more">
+            <a href="#about"><i class="fa fa-angle-down"></i></a>
+            </div>
+            
+    <div class="container wp2">
+    <h1 class="section-title">About the film</h1>
+ 
+        <div class="row">
+            <div class="col-lg-6 wp2 delay-05s">   
+    
+
+			  <div class="movie-disc">
+              <div class="movie-avatar">
+                      <div class="movie-avatar-img">
+                      		<img src="http://image.tmdb.org/t/p/w500{{data.movie.poster}}">
+                      </div><!-- /.movie-avatar-img --> 
+                  </div><!-- /.movie-disc --> 
+              </div><!-- /.movie-avatar --> 
+
+            </div><!-- /.col-lg-6 -->
+            
+            <div class="col-lg-6 wp2 delay-1s">  
+            <h2>{{data.movie.name}}<span class="text-color"></span></h2>
+        
+          
+            
+            <TABLE class="text-dark">
+
+                    <TR><TD>Release </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.movie.release_date}}</TD></TR>
+                    
+                    <TR><TD>Country </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.movie.country}}</TD></TR>
+                                        
+                    <TR><TD>Genre </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.genre|join(', ')}}</TD></TR>
+                    
+                    <TR><TD>Actor </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.actor|join(', ', attribute='name')}}</TD></TR>
+                    
+                    <TR><TD>Director </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.director|join(', ', attribute='name')}}</TD></TR>
+                     
+                    <TR><TD>Company </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.company|join(', ')}}</TD></TR>           
+
+            </TABLE>
+
+            <br>
+            <p>{{data.movie.overview}} 
+            <br>
+
+            <div class="detailed">
+            Rating:&nbsp;&nbsp; 
+            {% for i in range(1, 6) %}
+                {% if data.movie.rate >= i * 2 %}
+                    <i class="fa fa-star"></i>
+                {% elif data.movie.rate - i * 2 >= -1 %}
+                    <i class="fa fa-star-half-o"></i>
+                {% else %}
+                    <i class="fa fa-star-o"></i>
+                {% endif %}
+            {% endfor %}
+            <span>&nbsp;<b>{{data.movie.rate}}</b></span> 
+            
+            </div> 
+
+             {% if session.logged_in %}
+                {% if not data.liked %}
+                    <a href="{{ url_for('addFavorite', movie_id=data.movie.id) }}">Like this movie</a>
+                {% else %}
+                    <a href="{{ url_for('deleteFavorite', movie_id=data.movie.id) }}">Dislike this movie</a>
+                {% endif %}
+            {% endif %}
+
+            <p></p> 
+            </div><!-- /.col-lg-6 -->
+    	</div><!-- /.row -->
+    </div><!-- /.container --> 
+    </section><!-- /#about -->     
+          
+    
+    <!-- People Section -->
+    <section id="people">
+    <div class="container"> 
+        <div class="row">      
+        <div class="col-lg-12">
+        <h1 class="section-title">People</h1>
+        
+            <!-- {% set timer = 0 %}
+            {% set delay = [0, 05, 2] %} -->
+            <div id="owl-actors" class="owl-carousel owl-theme">
+                {% for d in data.director %}
+                <div class="item" >
+                    <!-- <div class="col-md-12 wp6 delay-{{delay[timer%3]}}s"> -->
+                    <div class="col-md-12 wp6">
+                        
+                                <div class="actor">
+                                    <div class="avatar">
+                                    <img alt="img" src="http://image.tmdb.org/t/p/h632{{d.profile}}">
+                                    </div>
+                                    
+                                    <div class="details">
+                                          <ul class="social">
+                                                <!-- <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li>-->
+                                          </ul>
+                                        <a href="{{ url_for('director', director_id=d.id) }}">learn more</a>
+                                          
+                                    </div>
+                                </div><!-- /.actor -->                                  
+                                <div class="actor-info">
+                                <h4 class="heading">{{d.name}}</h4>
+                                <h5 class="sub-heading">Director</h5>
+                                </div> <!-- /.actor-info -->        
+                    </div>
+                </div><!-- /.item -->
+                <!-- {% set timer = timer + 1 %} -->
+                {% endfor %} 
+
+                <!-- {% set timer = data.director|length %} -->
+                {% for a in data.actor %}
+                <div class="item" >
+                    <!-- <div class="col-md-12 wp6 delay-{{delay[timer%3]}}s"> -->
+                    <div class="col-md-12 wp6">
+                        
+                                <div class="actor">
+                                    <div class="avatar">
+                                    <img alt="img" src="http://image.tmdb.org/t/p/h632{{a.profile}}" width = 350 height = 525>
+                                    </div>
+                                    
+                                    <div class="details">
+                                          <ul class="social">
+                                                <!-- <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li> -->
+                                          </ul>
+                                          <a href="{{ url_for('actor', actor_id=a.id) }}">learn more</a>
+                                            
+                                    </div>
+                                </div><!-- /.actor -->                                  
+                                <div class="actor-info">
+                                <h4 class="heading">{{a.name}}</h4>
+                                <h5 class="sub-heading">Actor</h5>
+                                </div> <!-- /.actor-info -->        
+                    </div>
+                </div><!-- /.item -->
+                <!-- {% set timer = timer + 1 %} -->
+                {% endfor %}                          
+            </div>
+        </div><!-- /.col-lg-12 -->        
+        </div><!-- /.row -->          
+    </div><!-- /.container --> 
+	</section><!-- /#actors --> 
+    
+
+    <!-- Reviews Section -->
+    <section id="reviews">
+    <div class="container"> 
+        <div class="row">      
+        <div class="col-lg-12 wp10 delay-05s">
+        <h1 class="section-title">Reviews</h1>
+            {% if data.review|length == 0 %}
+                <div align="center">
+                    <h2>No review at the moment!</h2>
+                    <p></p>
+                </div>
+            {% else %}
+            <div id="owl-reviews">
+                {% for review in data.review %}
+                    <div class="item"> 
+                    <div>
+                         <span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp{{review.author}}:</span>    
+                    </div>   
+                   
+                   <!--  <span class="glyphicons glyphicons-user" aria-hidden="true"></span> --> <br><br><br>
+                    <div>
+                    {{review.content}}
+                    </div>
+                    </div>
+
+                {% endfor %}
+            </div><!-- /#owl-reviews -->
+            {% endif %}  
+           
+    	</div><!-- /.col-lg-12 --> 
+    	</div><!-- /.row --> 
+    </div><!-- /.container -->     	    
+	</section><!-- /#reviews --> 
+
+
+    <!-- Actor/Director Section -->
+    {% elif data.type == 'searchActor' or data.type == 'searchDirector' %}
+    <!-- About Section -->
+    <section id="about">
+            <div class="more page-scroll" id="more">
+            </div>
+            
+    <div class="container wp2">
+    {% if data.type == 'searchActor' %}
+    <h1 class="section-title">About the actor</h1>
+    {% else %}
+    <h1 class="section-title">About the director</h1>
+    {% endif %}
+
+ 
+        <div class="row">
+            <div class="col-lg-6 wp2 delay-05s">   
+
+              <!-- <div class="movie-disc"> -->
+              <!-- <div class="movie-avatar"> -->
+                      <!-- <div class="movie-avatar-img"> -->
+                            <img src="http://image.tmdb.org/t/p/w500{{data.person.profile}}" width = 370 height = 512 >
+                      <!-- </div>/.movie-avatar-img  -->
+                  <!-- </div>/.movie-disc  -->
+              <!-- </div>/.movie-avatar  -->
+
+            </div><!-- /.col-lg-6 -->
+            
+            <div class="col-lg-6 wp2 delay-1s">  
+            <h2>{{data.person.name}}<span class="text-color"></span></h2>
+          
+            
+            <TABLE class="text-dark">
+
+                    <TR><TD>Birthday </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.person.birthday}}</TD></TR>
+                    
+                    <TR><TD>Place of Birth </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.person.place_of_birth}}</TD></TR>
+                                                                                                     
+            </TABLE>
+
+            <br>
+            <p>{{data.person.biography}} 
+            <br>
+
+            <p></p> 
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+    </div><!-- /.container --> 
+    </section><!-- /#about --> 
+
+    <!-- Movie Section -->
+    <section id="casting movies">
+    <div class="container"> 
+        <div class="row">      
+        <div class="col-lg-12">
+        <h1 class="section-title">Movies</h1>
+        
+            <!-- {% set timer = 0 %}
+            {% set delay = [0, 05, 2] %} -->
+            <div id="owl-actors" class="owl-carousel owl-theme">
+                {% for m in data.movie %}
+                <div class="item" >
+                    <!-- <div class="col-md-12 wp6 delay-{{delay[timer%3]}}s"> -->
+                    <div class="col-md-12 wp6">
+                        
+                                <div class="actor">
+                                    <div class="avatar">
+                                    <img alt="img" src="http://image.tmdb.org/t/p/w500{{m.poster}}">
+                                    </div>
+                                    
+                                    <div class="details">
+                                          <ul class="social">
+                                               <!--  <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li> -->
+
+                                          </ul>
+                                        
+                                        <a href="{{ url_for('movie', movie_id=m.id) }}">learn more</a>  
+                                    </div>
+                                </div><!-- /.actor -->                                  
+                                <div class="actor-info">
+                                <h4 class="heading">{{m.name}}</h4>
+                                <!-- <h5 class="sub-heading">Director</h5> -->
+                                </div> <!-- /.actor-info -->        
+                    </div>
+                </div><!-- /.item -->
+                <!-- {% set timer = timer + 1 %} -->
+                {% endfor %} 
+                    
+            </div>
+        </div><!-- /.col-lg-12 -->        
+        </div><!-- /.row --> 
+        <p></p>       
+    </div><!-- /.container --> 
+    </section><!-- /#actors -->     
+
+
+    {% endif %}
+
+
+    <!-- Search Section -->
+    <section id="search">
+        <div class="more page-scroll" id="more">
+            <!-- <a href="#search"><i class="fa fa-angle-down"></i></a> -->
+        </div>
+    <div class="container"> 
+        <div class="row">      
+        <div class="col-lg-12 wp10 delay-05s">
+        <h1 class="section-title">Search</h1>
+            <div align="center">
+                <!-- print search error message -->
+                {% for message in get_flashed_messages(category_filter=["search"]) %}
+                <div align="center"><h2>{{ message }}</h2></div>
+                {% endfor %}
+
+                <form method="POST" action="/movie">
+                    <p>Name of movie: <input type="text" name="name"> <input type="submit" value="Search"></p>
+                </form>
+                <form method="POST" action="/director">
+                    <p>Name of director: <input type="text" name="name"> <input type="submit" value="Search"></p>
+                </form>
+                <form method="POST" action="/actor">
+                    <p>Name of actor: <input type="text" name="name"> <input type="submit" value="Search"></p>
+                </form>
+                <div></div>
+            </div>
+           
+        </div><!-- /.col-lg-12 --> 
+        </div><!-- /.row --> 
+    </div><!-- /.container -->          
+    </section><!-- /#reviews --> 
+    <p></p>
+
+    
+    <!-- Favorite Movie Section -->
+    {% if session.logged_in %}
+    <section id="favorite">
+        <div class="more page-scroll" id="more">
+            <a href="#favorite"><i class="fa fa-angle-down"></i></a>
+        </div>
+    <div class="container"> 
+        <div class="row">      
+        <div class="col-lg-12 wp10 delay-05s">
+        <h1 class="section-title">My Favorite</h1>
+            <!-- {% set timer = 0 %} -->
+            <!-- {% set delay = ["col-md-12 wp6 delay-0s", "col-md-12 wp6 delay-05s", "col-md-12 wp6 delay-1s"] %} -->
+            {% if session.favorite|length == 0 %}
+                <div align="center">
+                    <h2>Your favorite list is empty!</h2>
+                    <p></p>
+                </div>
+            {% else %}
+            <div id="owl-movies" class="owl-carousel owl-theme">
+                {% for m in session.favorite %}
+                <div class="item" >
+                    <!-- <div class="{{delay[timer%3]}}"> -->
+                    <div class="col-md-12 wp6 delay-05s">
+                        
+                                <div class="actor">
+                                    <div class="avatar">
+                                    <img alt="img" src="http://image.tmdb.org/t/p/w500{{m.poster}}">
+                                    </div>
+                                    
+                                    <div class="details">
+                                          <ul class="social">
+                                                <!-- <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li>-->
+                                          </ul>
+                                        
+                                        <a href="{{ url_for('movie', movie_id=m.id) }}">learn more</a>  
+                                    </div>
+                                </div><!-- /.actor -->                                  
+                                <div class="actor-info">
+                                <h4 class="heading">{{m.name}}</h4>
+                                </div> <!-- /.actor-info -->        
+                    </div>
+                </div><!-- /.item -->
+                <!-- {% set timer = timer + 1 %} -->
+                {% endfor %} 
+            </div>
+            {% endif %}
+        </div><!-- /.col-lg-12 -->        
+        </div><!-- /.row -->          
+    </div><!-- /.container --> 
+    </section><!-- /#actors -->     
+
+
+    <!-- Login Section -->
+    {% else %}
+    <section id="login">
+        <div class="more page-scroll" id="more">
+            <a href="#login"><i class="fa fa-angle-down"></i></a>
+        </div>
+    <div class="container"> 
+        <div class="row">      
+        <div class="col-lg-12 wp10 delay-05s">
+        <h1 class="section-title">Login</h1>
+            <div align="center">
+            <!-- <div id="owl-reviews"> -->
+                {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+                <form action="\login" method="post">
+                <div class="row">
+                <div class="columns">
+                    <input type="text" placeholder="Username" name="username" required/>
+                </div>
+                <div class="columns">
+                    <input type="text" placeholder="Password" name="password" required/>
+                </div>
+                <div class="columns">
+                    <button class="postfix" type="submit" name="action" value="login">Login</button>
+                    <button class="postfix" type="submit" name="action" value="signup">Signup</button>
+                </div>
+                </div>
+                </form>
+            <!-- </div>/#owl-reviews   -->
+            {% for message in get_flashed_messages(category_filter=["login"]) %}
+            <div>{{ message }}</div>
+            {% endfor %}
+
+            </div>
+           
+        </div><!-- /.col-lg-12 --> 
+        </div><!-- /.row --> 
+    </div><!-- /.container -->          
+    </section><!-- /#reviews -->
+
+    {% endif %}
+
+
+    <!-- Core JavaScript Files -->
+    <script src="{{ url_for('static',filename='js/jquery-1.10.2.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.easing.min.js') }}"></script>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static',filename='js/lib/jquery.appear.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/lib/owl-carousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/lib/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/lib/video/jquery.mb.YTPlayer.js') }}"></script> 		
+    <script src="{{ url_for('static',filename='js/lib/flipclock/flipclock.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/lib/jquery.animateNumber.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/lib/waypoints.min.js') }}"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+    
+
+</body>
+
+</html>
