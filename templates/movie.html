@@ -18,7 +18,8 @@
 
     <!-- Custom Theme CSS -->
     <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
-   
+    <link href="{{ url_for('static',filename='css/grayscale.min.css') }}" rel="stylesheet">
+
     <!-- Advanced CSS -->
     <link href="{{ url_for('static',filename='css/animate.css') }}" rel="stylesheet">
 	<link href="{{ url_for('static',filename='js/lib/owl-carousel/owl.carousel.css') }}" rel="stylesheet">
@@ -28,9 +29,31 @@
     <link href="{{ url_for('static',filename='js/lib/video/YTPlayer.css') }}" rel="stylesheet">
     <link href="{{ url_for('static',filename='js/lib/flipclock/flipclock.css') }}" rel="stylesheet">
     
+    <link href="{{ url_for('static',filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+    <!-- front-page -->
+    <header class="masthead">
+      <div class="intro-body">
+        <div class="container">
+          <div  class="row">
+            <div id = "frontpage" class="col-lg-8 mx-auto">
+              <h1 class="brand-heading">Movie Master</h1>
+              <p class="intro-text">A free, responsive, film website
+                <br>Search for what you want</p>
+              <a href="#about" class="btn btn-circle js-scroll-trigger">
+                <i class="fa fa-angle-double-down animated"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
 
 	<!-- Navigation -->
     <nav class="navbar navbar-custom navbar-fixed-top wp1" role="navigation">
@@ -409,6 +432,11 @@
         <div class="more page-scroll" id="more">
             <!-- <a href="#search"><i class="fa fa-angle-down"></i></a> -->
         </div>
+
+    <div class="container">
+    
+    </div>
+        <!-- new -->
     <div class="container"> 
         <div class="row">      
         <div class="col-lg-12 wp10 delay-05s">
@@ -419,14 +447,54 @@
                 <div align="center"><h2>{{ message }}</h2></div>
                 {% endfor %}
 
-                <form method="POST" action="/movie">
-                    <p>Name of movie: <input type="text" name="name"> <input type="submit" value="Search"></p>
+            <form method="POST" action="/movie">
+            <div class="row">
+            <div class="col-md-12">
+            <div class="input-group" id="adv-search">
+                <input type="text" name="name" class="form-control" placeholder="Search for snippets">
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">   
+                        </div>
+                        <button type="submit" class="btn btn-primary" value="Search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div> 
                 </form>
+
                 <form method="POST" action="/director">
-                    <p>Name of director: <input type="text" name="name"> <input type="submit" value="Search"></p>
+            <div class="row">
+            <div class="col-md-12">
+            <div class="input-group" id="adv-search">
+                <input type="text" name="name" class="form-control" placeholder="Search for snippets">
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">   
+                        </div>
+                        <button type="submit" class="btn btn-primary" value="Search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div> 
                 </form>
                 <form method="POST" action="/actor">
-                    <p>Name of actor: <input type="text" name="name"> <input type="submit" value="Search"></p>
+            <div class="row">
+            <div class="col-md-12">
+            <div class="input-group" id="adv-search">
+                <input type="text" name="name" class="form-control" placeholder="Search for snippets">
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">   
+                        </div>
+                        <button type="submit" class="btn btn-primary" value="Search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div> 
                 </form>
                 <div></div>
             </div>
@@ -550,6 +618,14 @@
     <!-- Custom Theme JavaScript -->
     <script src="{{ url_for('static',filename='js/main.js') }}"></script>
     
+     <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static',filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/grayscale.min.js') }}"></script>
+
+    <!-- Plugin JavaScript -->
+    <!-- Custom scripts for this template -->
 
 </body>
 
