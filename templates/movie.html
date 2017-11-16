@@ -37,23 +37,7 @@
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
-    <!-- front-page -->
-    <header class="masthead">
-      <div class="intro-body">
-        <div class="container">
-          <div  class="row">
-            <div id = "frontpage" class="col-lg-8 mx-auto">
-              <h1 class="brand-heading">Movie Master</h1>
-              <p class="intro-text">A free, responsive, film website
-                <br>Search for what you want</p>
-              <a href="#about" class="btn btn-circle js-scroll-trigger">
-                <i class="fa fa-angle-double-down animated"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+    
 
 	<!-- Navigation -->
     <nav class="navbar navbar-custom navbar-fixed-top wp1" role="navigation">
@@ -98,7 +82,25 @@
         </div>
         <!-- /.container -->
     </nav>
-
+{% if data.type == 'home'%}
+    <!-- front-page -->
+    <header class="masthead">
+      <div class="intro-body">
+        <div class="container">
+          <div  class="row">
+            <div id = "frontpage" class="col-lg-8 mx-auto">
+              <h1 class="brand-heading">Movie Master</h1>
+              <p class="intro-text">A free, responsive, film website
+                <br>Search for what you want</p>
+              <a href="#about" class="btn btn-circle js-scroll-trigger">
+                <i class="fa fa-angle-double-down animated"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    {% endif %}
    
     <!-- Intro Section -->
     {% if data.type == 'searchMovie' %}
@@ -424,6 +426,100 @@
     </section><!-- /#actors -->     
 
 
+
+
+    <!-- Company Section -->
+    {% elif data.type == 'searchCompany' %}
+    <!-- About Section -->
+    <section id="about">
+            <div class="more page-scroll" id="more">
+            </div>
+            
+    <div class="container wp2">
+    <h1 class="section-title">About the Company</h1>
+
+ 
+        <div class="row">
+            <div class="col-lg-6 wp2 delay-05s">   
+
+              <!-- <div class="movie-disc"> -->
+              <!-- <div class="movie-avatar"> -->
+                      <!-- <div class="movie-avatar-img"> -->
+                            <img src="http://image.tmdb.org/t/p/w500{{data.company.logo}}" width = 370 height = 512 >
+                      <!-- </div>/.movie-avatar-img  -->
+                  <!-- </div>/.movie-disc  -->
+              <!-- </div>/.movie-avatar  -->
+
+            </div><!-- /.col-lg-6 -->
+            
+            <div class="col-lg-6 wp2 delay-1s">  
+            <h2>{{data.company.name}}<span class="text-color"></span></h2>
+          
+            
+            <!-- <TABLE class="text-dark">
+
+                    <TR><TD>Description </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.company.description}}</TD></TR>
+                                                                                                                         
+            </TABLE> -->
+
+            <br>
+            <p>{{data.company.description}} 
+            <br>
+
+            <p></p> 
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+    </div><!-- /.container --> 
+    </section><!-- /#about --> 
+
+    <!-- Movie Section -->
+    <section id="casting movies">
+    <div class="container"> 
+        <div class="row">      
+        <div class="col-lg-12">
+        <h1 class="section-title">Movies</h1>
+        
+            <!-- {% set timer = 0 %}
+            {% set delay = [0, 05, 2] %} -->
+            <div id="owl-actors" class="owl-carousel owl-theme">
+                {% for m in data.movie %}
+                <div class="item" >
+                    <!-- <div class="col-md-12 wp6 delay-{{delay[timer%3]}}s"> -->
+                    <div class="col-md-12 wp6">
+                        
+                                <div class="actor">
+                                    <div class="avatar">
+                                    <img alt="img" src="http://image.tmdb.org/t/p/w500{{m.poster}}">
+                                    </div>
+                                    
+                                    <div class="details">
+                                          <ul class="social">
+                                               <!--  <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li> -->
+
+                                          </ul>
+                                        
+                                        <a href="{{ url_for('movie', movie_id=m.id) }}">learn more</a>  
+                                    </div>
+                                </div><!-- /.actor -->                                  
+                                <div class="actor-info">
+                                <h4 class="heading">{{m.name}}</h4>
+                                <!-- <h5 class="sub-heading">Director</h5> -->
+                                </div> <!-- /.actor-info -->        
+                    </div>
+                </div><!-- /.item -->
+                <!-- {% set timer = timer + 1 %} -->
+                {% endfor %} 
+                    
+            </div>
+        </div><!-- /.col-lg-12 -->        
+        </div><!-- /.row --> 
+        <p></p>       
+    </div><!-- /.container --> 
+    </section><!-- /#actors -->     
+
+
     {% endif %}
 
 
@@ -481,6 +577,22 @@
         </div> 
                 </form>
                 <form method="POST" action="/actor">
+            <div class="row">
+            <div class="col-md-12">
+            <div class="input-group" id="adv-search">
+                <input type="text" name="name" class="form-control" placeholder="Search for snippets">
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">   
+                        </div>
+                        <button type="submit" class="btn btn-primary" value="Search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div> 
+                </form>
+                <form method="POST" action="/company">
             <div class="row">
             <div class="col-md-12">
             <div class="input-group" id="adv-search">

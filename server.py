@@ -16,11 +16,7 @@ app.config.from_object(__name__)
 
 engine = create_engine(DATABASEURI)
 
-# engine.execute("""CREATE TABLE IF NOT EXISTS test (
-#   id serial,
-#   name text
-# );""")
-#engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
+
 
 def convert(date):
   return 'None' if date==date.max else date
@@ -149,7 +145,6 @@ def actor():
   if request.method == "POST":
     name = request.form['name']
     actor_id = None
-    print(name)
     cursor = g.conn.execute("SELECT actor_id FROM actor WHERE name ILIKE '{0}';".format(name))
     for i in cursor:
       actor_id = i[0]
@@ -167,6 +162,39 @@ def actor():
   print(data)
 
   cursor = g.conn.execute("SELECT m.movie_id, m.name, m.poster FROM movie m, act a WHERE a.movie_id = m.movie_id AND a.actor_id = '{0}';".format(actor_id))
+  data['movie'] = [{'id': i[0], 'name': i[1], 'poster': i[2]} for i in cursor]
+  cursor.close()
+
+  return render_template("movie.html", data=data)
+
+
+
+
+
+@app.route('/company', methods=['POST', 'GET'])
+def company():
+  data = {'type': 'searchCompany'}
+
+  if request.method == "POST":
+    name = request.form['name']
+    company_id = None
+    cursor = g.conn.execute("SELECT company_id FROM company WHERE name ILIKE '{0}';".format(name))
+    for i in cursor:
+      company_id = i[0]
+    cursor.close()
+    if not company_id:
+      flash('No result found!', 'search')
+      return redirect('/')
+    return redirect('/company?company_id={0}'.format(company_id))
+
+  company_id = int(request.args.get('company_id'))
+  cursor = g.conn.execute("SELECT * FROM company WHERE company_id = '{0}';".format(company_id))
+  for i in cursor:
+    data['company'] = {'id': i[0], 'name': i[1], 'logo': i[2], 'description': i[3]}
+  cursor.close()
+  print(data)
+
+  cursor = g.conn.execute("SELECT m.movie_id, m.name, m.poster FROM movie m, produce p WHERE p.movie_id = m.movie_id AND p.company_id = '{0}';".format(company_id))
   data['movie'] = [{'id': i[0], 'name': i[1], 'poster': i[2]} for i in cursor]
   cursor.close()
 
