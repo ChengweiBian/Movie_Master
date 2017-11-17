@@ -523,6 +523,9 @@
     {% endif %}
 
 
+
+
+
     <!-- Search Section -->
     <section id="search">
         <div class="more page-scroll" id="more">
@@ -538,32 +541,25 @@
         <div class="col-lg-12 wp10 delay-05s">
         <h1 class="section-title">Search</h1>
             <div align="center">
+
                 <!-- print search error message -->
                 {% for message in get_flashed_messages(category_filter=["search"]) %}
                 <div align="center"><h2>{{ message }}</h2></div>
                 {% endfor %}
 
-            <form method="POST" action="/movie">
+            <form method="POST" action="/search">
             <div class="row">
             <div class="col-md-12">
             <div class="input-group" id="adv-search">
-                <input type="text" name="name" class="form-control" placeholder="Search for snippets">
-                <div class="input-group-btn">
-                    <div class="btn-group" role="group">
-                        <div class="dropdown dropdown-lg">   
-                        </div>
-                        <button type="submit" class="btn btn-primary" value="Search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div> 
-                </form>
 
-                <form method="POST" action="/director">
-            <div class="row">
-            <div class="col-md-12">
-            <div class="input-group" id="adv-search">
+            <select name="types">
+                <option value="" disabled selected>Search by</option>
+                <option value="movie">movie</option>
+                <option value="actor">actor</option>
+                <option value="director">director</option>
+                <option value="company">company</option>
+            </select>
+
                 <input type="text" name="name" class="form-control" placeholder="Search for snippets">
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
@@ -573,42 +569,12 @@
                     </div>
                 </div>
             </div>
-          </div>
-        </div> 
-                </form>
-                <form method="POST" action="/actor">
-            <div class="row">
-            <div class="col-md-12">
-            <div class="input-group" id="adv-search">
-                <input type="text" name="name" class="form-control" placeholder="Search for snippets">
-                <div class="input-group-btn">
-                    <div class="btn-group" role="group">
-                        <div class="dropdown dropdown-lg">   
-                        </div>
-                        <button type="submit" class="btn btn-primary" value="Search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </div>
-                </div>
             </div>
-          </div>
-        </div> 
-                </form>
-                <form method="POST" action="/company">
-            <div class="row">
-            <div class="col-md-12">
-            <div class="input-group" id="adv-search">
-                <input type="text" name="name" class="form-control" placeholder="Search for snippets">
-                <div class="input-group-btn">
-                    <div class="btn-group" role="group">
-                        <div class="dropdown dropdown-lg">   
-                        </div>
-                        <button type="submit" class="btn btn-primary" value="Search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div> 
-                </form>
-                <div></div>
+            </div> 
+            </form>
+
+                
+            <div></div>
             </div>
            
         </div><!-- /.col-lg-12 --> 
@@ -617,6 +583,8 @@
     </section><!-- /#reviews --> 
 
     
+
+
     <!-- Favorite Movie Section -->
     {% if session.logged_in %}
     <section id="favorite">
@@ -648,9 +616,6 @@
                                     
                                     <div class="details">
                                           <ul class="social">
-                                                <!-- <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li>-->
                                           </ul>
                                         
                                         <a href="{{ url_for('movie', movie_id=m.id) }}">learn more</a>  

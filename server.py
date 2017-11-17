@@ -44,8 +44,7 @@ def teardown_request(exception):
 def index():
   
   data = {'type': 'home'}
-  data['movie'] = {'id': None}
-  # data['error'] = request.args.get('error', None)
+  # data['movie'] = {'id': None}
   # print(session)
   
   return render_template('movie.html', data=data)
@@ -159,7 +158,6 @@ def actor():
   for i in cursor:
     data['person'] = {'id': i[0], 'name': i[1], 'place_of_birth': i[2], 'birthday': convert(i[3]), 'biography': i[4], 'profile': i[5]}
   cursor.close()
-  print(data)
 
   cursor = g.conn.execute("SELECT m.movie_id, m.name, m.poster FROM movie m, act a WHERE a.movie_id = m.movie_id AND a.actor_id = '{0}';".format(actor_id))
   data['movie'] = [{'id': i[0], 'name': i[1], 'poster': i[2]} for i in cursor]
@@ -192,13 +190,21 @@ def company():
   for i in cursor:
     data['company'] = {'id': i[0], 'name': i[1], 'logo': i[2], 'description': i[3]}
   cursor.close()
-  print(data)
 
   cursor = g.conn.execute("SELECT m.movie_id, m.name, m.poster FROM movie m, produce p WHERE p.movie_id = m.movie_id AND p.company_id = '{0}';".format(company_id))
   data['movie'] = [{'id': i[0], 'name': i[1], 'poster': i[2]} for i in cursor]
   cursor.close()
 
   return render_template("movie.html", data=data)
+
+
+
+
+
+@app.route('/search', methods=['POST'])
+def search():
+  searchType = request.form['types']
+  return redirect(url_for(searchType), code = 307)
 
 
 
@@ -275,11 +281,8 @@ def login():
 
 @app.route('/logout')
 def logout():
-    # movie_id = request.args.get('movie_id', None)
-    # session['logged_in'] = False
     session.clear()
     # flash('You were logged out')
-    # return redirect('/movie?movie_id={0}'.format(movie_id))
     return redirect(request.referrer)
 
 
@@ -290,7 +293,7 @@ def logout():
 def addFavorite():
     movie_id = int(request.args.get('movie_id', None))
     try:
-      print("INSERT INTO likes VALUES ('{0}', {1});".format(session['username'], movie_id))
+      # print("INSERT INTO likes VALUES ('{0}', {1});".format(session['username'], movie_id))
       engine.execute("INSERT INTO likes VALUES ('{0}', {1});".format(session['username'], movie_id))
     except:
       print('Error when insert into table Likes!')
