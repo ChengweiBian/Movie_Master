@@ -129,7 +129,6 @@
 		</div><!-- /.intro-info-wrapper -->
 
         <div class="media-btns buttons page-scroll">
-            <a class="btn btn-default about-btn" href="#about">View about<i class="fa fa-chevron-right"></i></a>
         </div>
 
     </div>
@@ -248,7 +247,7 @@
                                             <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
                                             <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li>-->
                                       </ul>
-                                    <a href="{{ url_for('director', director_id=d.id) }}">learn more</a>
+                                    <a href="{{ url_for('director', director_id=d.id) }}"> learn more</a>
                                       
                                 </div>
                             </div><!-- /.actor -->                                  
@@ -535,6 +534,8 @@
     <div class="container"> 
         <div class="row">      
          <div class="col-lg-12 wp10 delay-05s">
+            <br>
+            <br>
           <h1 class="section-title">Search</h1>
             <div align="center">
 
@@ -543,11 +544,14 @@
                 <div align="center"><h2>{{ message }}</h2></div>
                 {% endfor %}
 
-
+            <br>
+            <br>
+            <br>
+            <br>
             <form method="POST" action="/search">
             <div class="row123">
                 
-                <select name="types" style= "color:black" class="selectpicker" data-style="btn-primary" title="Choose one of the following...">
+                <select name="types" style= "color:black" class="selectpicker" data-style="btn-primary" required>
                 <option value="" disabled selected>Search by</option>
                 <option value="movie">movie</option>
                 <option value="actor">actor</option>
@@ -623,15 +627,15 @@
     <!-- Login Section -->
     {% else %}
     <section id="login">
-        <div class="more page-scroll" id="more">
-            <a href="#login"><i class="fa fa-angle-down"></i></a>
-        </div>
     <div class="container"> 
         <div class="row">      
         <div class="col-lg-12 wp10 delay-05s">
         <h1 class="section-title">Login</h1>
             <div align="center">
             <!-- <div id="owl-reviews"> -->
+            {% for message in get_flashed_messages(category_filter=["login"]) %}
+            <div align="center"><h2>{{ message }}</h2></div>
+            {% endfor %}
 <!--                 {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
  -->
 <div class="container">
@@ -714,9 +718,7 @@
                 </div>
                 </form> -->
             <!-- </div>/#owl-reviews   -->
-            {% for message in get_flashed_messages(category_filter=["login"]) %}
-            <div>{{ message }}</div>
-            {% endfor %}
+            
 
             </div>
            
