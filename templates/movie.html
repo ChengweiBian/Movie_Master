@@ -82,6 +82,8 @@
         </div>
         <!-- /.container -->
     </nav>
+
+
 {% if data.type == 'home'%}
     <!-- front-page -->
     <header class="masthead">
@@ -102,328 +104,330 @@
     </header>
     {% endif %}
    
+
+
     <!-- Intro Section -->
     {% if data.type == 'searchMovie' %}
-    <section id="intro">
-    <div class="video-content">  
-    <div class="video-image wp1 delay-1s">
-    	<img src="http://image.tmdb.org/t/p/original{{data.movie.background}}" width=1920 height=1080 alt="">
-    </div>
-    
-    <div style="background: url("img/overlay-pat.png") rgb(255,255,255,0.3)">
+<section id="intro">
+<div class="video-content">  
+<div class="video-image wp1 delay-1s">
+	<img src="http://image.tmdb.org/t/p/original{{data.movie.background}}" width=1920 height=1080 alt="">
+</div>
 
-        <div class="container-wrapper">
-           <div class="container">
-            <div class="col-md-12 wp1 delay-05s">
-            
-            <div class="intro-info-wrapper">
+<div style="background: url("img/overlay-pat.png") rgb(255,255,255,0.3)">
+
+    <div class="container-wrapper">
+       <div class="container">
+        <div class="col-md-12 wp1 delay-05s">
+        
+        <div class="intro-info-wrapper">
 <!--                 <div>{{data}}</div>
- -->            <h1 class="text-center">{{data.movie.name}}  <span class="text-color font-light"></span></h1>
+-->            <h1 class="text-center">{{data.movie.name}}  <span class="text-color font-light"></span></h1>
+            
+        </div>
+    	</div>
+		</div><!-- /.intro-info-wrapper -->
+
+        <div class="media-btns buttons page-scroll">
+            <a class="btn btn-default about-btn" href="#about">View about<i class="fa fa-chevron-right"></i></a>
+        </div>
+
+    </div>
+	</div>
+   
+
+    <div class="video-container">
+        <div id="player"></div>
+    </div>
+    </div>
+
+</section><!-- /#intro --> 
+
+
+<!-- About Section -->
+<section id="about">
+        <div class="more page-scroll" id="more">
+        <a href="#about"><i class="fa fa-angle-down"></i></a>
+        </div>
+        
+<div class="container wp2">
+<h1 class="section-title">About the film</h1>
+
+    <div class="row">
+        <div class="col-lg-6 wp2 delay-05s">   
+
+
+		  <div class="movie-disc">
+          <div class="movie-avatar">
+                  <div class="movie-avatar-img">
+                  		<img src="http://image.tmdb.org/t/p/w500{{data.movie.poster}}">
+                  </div><!-- /.movie-avatar-img --> 
+              </div><!-- /.movie-disc --> 
+          </div><!-- /.movie-avatar --> 
+
+        </div><!-- /.col-lg-6 -->
+        
+        <div class="col-lg-6 wp2 delay-1s">  
+        <h2>{{data.movie.name}}<span class="text-color"></span></h2>
+    
+      
+        
+        <TABLE class="text-dark">
+
+                <TR><TD>Release </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.movie.release_date}}</TD></TR>
                 
-            </div>
-        	</div>
-			</div><!-- /.intro-info-wrapper -->
-
-            <div class="media-btns buttons page-scroll">
-                <a class="btn btn-default about-btn" href="#about">View about<i class="fa fa-chevron-right"></i></a>
-            </div>
-
-        </div>
-		</div>
-       
-
-        <div class="video-container">
-            <div id="player"></div>
-        </div>
-        </div>
-
-    </section><!-- /#intro --> 
-    
-
-    <!-- About Section -->
-    <section id="about">
-            <div class="more page-scroll" id="more">
-            <a href="#about"><i class="fa fa-angle-down"></i></a>
-            </div>
-            
-    <div class="container wp2">
-    <h1 class="section-title">About the film</h1>
- 
-        <div class="row">
-            <div class="col-lg-6 wp2 delay-05s">   
-    
-
-			  <div class="movie-disc">
-              <div class="movie-avatar">
-                      <div class="movie-avatar-img">
-                      		<img src="http://image.tmdb.org/t/p/w500{{data.movie.poster}}">
-                      </div><!-- /.movie-avatar-img --> 
-                  </div><!-- /.movie-disc --> 
-              </div><!-- /.movie-avatar --> 
-
-            </div><!-- /.col-lg-6 -->
-            
-            <div class="col-lg-6 wp2 delay-1s">  
-            <h2>{{data.movie.name}}<span class="text-color"></span></h2>
-        
-          
-            
-            <TABLE class="text-dark">
-
-                    <TR><TD>Release </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.movie.release_date}}</TD></TR>
-                    
-                    <TR><TD>Country </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.movie.country}}</TD></TR>
-                                        
-                    <TR><TD>Genre </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.genre|join(', ')}}</TD></TR>
-                    
-                    <TR><TD>Actor </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.actor|join(', ', attribute='name')}}</TD></TR>
-                    
-                    <TR><TD>Director </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.director|join(', ', attribute='name')}}</TD></TR>
-                     
-                    <TR><TD>Company </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.company|join(', ')}}</TD></TR>           
-
-            </TABLE>
-
-            <br>
-            <p>{{data.movie.overview}} 
-            <br>
-
-            <div class="detailed">
-            Rating:&nbsp;&nbsp; 
-            {% for i in range(1, 6) %}
-                {% if data.movie.rate >= i * 2 %}
-                    <i class="fa fa-star"></i>
-                {% elif data.movie.rate - i * 2 >= -1 %}
-                    <i class="fa fa-star-half-o"></i>
-                {% else %}
-                    <i class="fa fa-star-o"></i>
-                {% endif %}
-            {% endfor %}
-            <span>&nbsp;<b>{{data.movie.rate}}</b></span> 
-            
-            </div> 
-
-             {% if session.logged_in %}
-                {% if not data.liked %}
-                    <a href="{{ url_for('addFavorite', movie_id=data.movie.id) }}">Like this movie</a>
-                {% else %}
-                    <a href="{{ url_for('deleteFavorite', movie_id=data.movie.id) }}">Dislike this movie</a>
-                {% endif %}
-            {% endif %}
-
-            <p></p> 
-            </div><!-- /.col-lg-6 -->
-    	</div><!-- /.row -->
-    </div><!-- /.container --> 
-    </section><!-- /#about -->     
-          
-    
-    <!-- People Section -->
-    <section id="people">
-    <div class="container"> 
-        <div class="row">      
-        <div class="col-lg-12">
-        <h1 class="section-title">People</h1>
-        
-            <!-- {% set timer = 0 %}
-            {% set delay = [0, 05, 2] %} -->
-            <div id="owl-actors" class="owl-carousel owl-theme">
-                {% for d in data.director %}
-                <div class="item" >
-                    <!-- <div class="col-md-12 wp6 delay-{{delay[timer%3]}}s"> -->
-                    <div class="col-md-12 wp6">
-                        
-                                <div class="actor">
-                                    <div class="avatar">
-                                    <img alt="img" src="http://image.tmdb.org/t/p/h632{{d.profile}}">
-                                    </div>
+                <TR><TD>Country </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.movie.country}}</TD></TR>
                                     
-                                    <div class="details">
-                                          <ul class="social">
-                                                <!-- <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li>-->
-                                          </ul>
-                                        <a href="{{ url_for('director', director_id=d.id) }}">learn more</a>
-                                          
-                                    </div>
-                                </div><!-- /.actor -->                                  
-                                <div class="actor-info">
-                                <h4 class="heading">{{d.name}}</h4>
-                                <h5 class="sub-heading">Director</h5>
-                                </div> <!-- /.actor-info -->        
-                    </div>
-                </div><!-- /.item -->
-                <!-- {% set timer = timer + 1 %} -->
-                {% endfor %} 
+                <TR><TD>Genre </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.genre|join(', ')}}</TD></TR>
+                
+                <TR><TD>Actor </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.actor|join(', ', attribute='name')}}</TD></TR>
+                
+                <TR><TD>Director </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.director|join(', ', attribute='name')}}</TD></TR>
+                 
+                <TR><TD>Company </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.company|join(', ')}}</TD></TR>           
 
-                <!-- {% set timer = data.director|length %} -->
-                {% for a in data.actor %}
-                <div class="item" >
-                    <!-- <div class="col-md-12 wp6 delay-{{delay[timer%3]}}s"> -->
-                    <div class="col-md-12 wp6">
-                        
-                                <div class="actor">
-                                    <div class="avatar">
-                                    <img alt="img" src="http://image.tmdb.org/t/p/h632{{a.profile}}" width = 350 height = 525>
-                                    </div>
-                                    
-                                    <div class="details">
-                                          <ul class="social">
-                                                <!-- <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li> -->
-                                          </ul>
-                                          <a href="{{ url_for('actor', actor_id=a.id) }}">learn more</a>
-                                            
-                                    </div>
-                                </div><!-- /.actor -->                                  
-                                <div class="actor-info">
-                                <h4 class="heading">{{a.name}}</h4>
-                                <h5 class="sub-heading">Actor</h5>
-                                </div> <!-- /.actor-info -->        
-                    </div>
-                </div><!-- /.item -->
-                <!-- {% set timer = timer + 1 %} -->
-                {% endfor %}                          
-            </div>
-        </div><!-- /.col-lg-12 -->        
-        </div><!-- /.row -->          
-    </div><!-- /.container --> 
-	</section><!-- /#actors --> 
-    
+        </TABLE>
 
-    <!-- Reviews Section -->
-    <section id="reviews">
-    <div class="container"> 
-        <div class="row">      
-        <div class="col-lg-12 wp10 delay-05s">
-        <h1 class="section-title">Reviews</h1>
-            {% if data.review|length == 0 %}
-                <div align="center">
-                    <h2>No review at the moment!</h2>
-                    <p></p>
-                </div>
+        <br>
+        <p>{{data.movie.overview}} 
+        <br>
+
+        <div class="detailed">
+        Rating:&nbsp;&nbsp; 
+        {% for i in range(1, 6) %}
+            {% if data.movie.rate >= i * 2 %}
+                <i class="fa fa-star"></i>
+            {% elif data.movie.rate - i * 2 >= -1 %}
+                <i class="fa fa-star-half-o"></i>
             {% else %}
-            <div id="owl-reviews">
-                {% for review in data.review %}
-                    <div class="item"> 
-                    <div>
-                         <span class="glyphicon glyphicon-user" aria-hidden="true">  {{review.author}}:</span>    
-                    </div>   
-                   
-                   <!--  <span class="glyphicons glyphicons-user" aria-hidden="true"></span> --> <br><br><br>
-                    <div>
-                    {{review.content}}
-                    </div>
-                    </div>
-
-                {% endfor %}
-            </div><!-- /#owl-reviews -->
-            {% endif %}  
-           
-    	</div><!-- /.col-lg-12 --> 
-    	</div><!-- /.row --> 
-    </div><!-- /.container -->     	    
-	</section><!-- /#reviews --> 
-
-
-    <!-- Actor/Director Section -->
-    {% elif data.type == 'searchActor' or data.type == 'searchDirector' %}
-    <!-- About Section -->
-    <section id="about">
-            <div class="more page-scroll" id="more">
-            </div>
-            
-    <div class="container wp2">
-    {% if data.type == 'searchActor' %}
-    <h1 class="section-title">About the actor</h1>
-    {% else %}
-    <h1 class="section-title">About the director</h1>
-    {% endif %}
-
- 
-        <div class="row">
-            <div class="col-lg-6 wp2 delay-05s">   
-
-              <!-- <div class="movie-disc"> -->
-              <!-- <div class="movie-avatar"> -->
-                      <!-- <div class="movie-avatar-img"> -->
-                            <img src="http://image.tmdb.org/t/p/w500{{data.person.profile}}" width = 370 height = 512 >
-                      <!-- </div>/.movie-avatar-img  -->
-                  <!-- </div>/.movie-disc  -->
-              <!-- </div>/.movie-avatar  -->
-
-            </div><!-- /.col-lg-6 -->
-            
-            <div class="col-lg-6 wp2 delay-1s">  
-            <h2>{{data.person.name}}<span class="text-color"></span></h2>
-          
-            
-            <TABLE class="text-dark">
-
-                    <TR><TD>Birthday </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.person.birthday}}</TD></TR>
-                    
-                    <TR><TD>Place of Birth </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.person.place_of_birth}}</TD></TR>
-                                                                                                     
-            </TABLE>
-
-            <br>
-            <p>{{data.person.biography}} 
-            <br>
-
-            <p></p> 
-            </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-    </div><!-- /.container --> 
-    </section><!-- /#about --> 
-
-    <!-- Movie Section -->
-    <section id="casting movies">
-    <div class="container"> 
-        <div class="row">      
-        <div class="col-lg-12">
-        <h1 class="section-title">Movies</h1>
+                <i class="fa fa-star-o"></i>
+            {% endif %}
+        {% endfor %}
+        <span>&nbsp;<b>{{data.movie.rate}}</b></span> 
         
-            <!-- {% set timer = 0 %}
-            {% set delay = [0, 05, 2] %} -->
-            <div id="owl-actors" class="owl-carousel owl-theme">
-                {% for m in data.movie %}
-                <div class="item" >
-                    <!-- <div class="col-md-12 wp6 delay-{{delay[timer%3]}}s"> -->
-                    <div class="col-md-12 wp6">
-                        
-                                <div class="actor">
-                                    <div class="avatar">
-                                    <img alt="img" src="http://image.tmdb.org/t/p/w500{{m.poster}}">
-                                    </div>
-                                    
-                                    <div class="details">
-                                          <ul class="social">
-                                               <!--  <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li> -->
+        </div> 
 
-                                          </ul>
-                                        
-                                        <a href="{{ url_for('movie', movie_id=m.id) }}">learn more</a>  
-                                    </div>
-                                </div><!-- /.actor -->                                  
-                                <div class="actor-info">
-                                <h4 class="heading">{{m.name}}</h4>
-                                <!-- <h5 class="sub-heading">Director</h5> -->
-                                </div> <!-- /.actor-info -->        
-                    </div>
-                </div><!-- /.item -->
-                <!-- {% set timer = timer + 1 %} -->
-                {% endfor %} 
+         {% if session.logged_in %}
+            {% if not data.liked %}
+                <a href="{{ url_for('addFavorite', movie_id=data.movie.id) }}">Like this movie</a>
+            {% else %}
+                <a href="{{ url_for('deleteFavorite', movie_id=data.movie.id) }}">Dislike this movie</a>
+            {% endif %}
+        {% endif %}
+
+        <p></p> 
+        </div><!-- /.col-lg-6 -->
+	</div><!-- /.row -->
+</div><!-- /.container --> 
+</section><!-- /#about -->     
+      
+
+<!-- People Section -->
+<section id="people">
+<div class="container"> 
+    <div class="row">      
+    <div class="col-lg-12">
+    <h1 class="section-title">People</h1>
+    
+        <!-- {% set timer = 0 %}
+        {% set delay = [0, 05, 2] %} -->
+        <div id="owl-actors" class="owl-carousel owl-theme">
+            {% for d in data.director %}
+            <div class="item" >
+                <!-- <div class="col-md-12 wp6 delay-{{delay[timer%3]}}s"> -->
+                <div class="col-md-12 wp6">
                     
+                            <div class="actor">
+                                <div class="avatar">
+                                <img alt="img" src="http://image.tmdb.org/t/p/h632{{d.profile}}">
+                                </div>
+                                
+                                <div class="details">
+                                      <ul class="social">
+                                            <!-- <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li>-->
+                                      </ul>
+                                    <a href="{{ url_for('director', director_id=d.id) }}">learn more</a>
+                                      
+                                </div>
+                            </div><!-- /.actor -->                                  
+                            <div class="actor-info">
+                            <h4 class="heading">{{d.name}}</h4>
+                            <h5 class="sub-heading">Director</h5>
+                            </div> <!-- /.actor-info -->        
+                </div>
+            </div><!-- /.item -->
+            <!-- {% set timer = timer + 1 %} -->
+            {% endfor %} 
+
+            <!-- {% set timer = data.director|length %} -->
+            {% for a in data.actor %}
+            <div class="item" >
+                <!-- <div class="col-md-12 wp6 delay-{{delay[timer%3]}}s"> -->
+                <div class="col-md-12 wp6">
+                    
+                            <div class="actor">
+                                <div class="avatar">
+                                <img alt="img" src="http://image.tmdb.org/t/p/h632{{a.profile}}" width = 350 height = 525>
+                                </div>
+                                
+                                <div class="details">
+                                      <ul class="social">
+                                            <!-- <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li> -->
+                                      </ul>
+                                      <a href="{{ url_for('actor', actor_id=a.id) }}">learn more</a>
+                                        
+                                </div>
+                            </div><!-- /.actor -->                                  
+                            <div class="actor-info">
+                            <h4 class="heading">{{a.name}}</h4>
+                            <h5 class="sub-heading">Actor</h5>
+                            </div> <!-- /.actor-info -->        
+                </div>
+            </div><!-- /.item -->
+            <!-- {% set timer = timer + 1 %} -->
+            {% endfor %}                          
+        </div>
+    </div><!-- /.col-lg-12 -->        
+    </div><!-- /.row -->          
+</div><!-- /.container --> 
+</section><!-- /#actors --> 
+
+
+<!-- Reviews Section -->
+<section id="reviews">
+<div class="container"> 
+    <div class="row">      
+    <div class="col-lg-12 wp10 delay-05s">
+    <h1 class="section-title">Reviews</h1>
+        {% if data.review|length == 0 %}
+            <div align="center">
+                <h2>No review at the moment!</h2>
+                <p></p>
             </div>
-        </div><!-- /.col-lg-12 -->        
-        </div><!-- /.row --> 
-        <p></p>       
-    </div><!-- /.container --> 
-    </section><!-- /#actors -->     
+        {% else %}
+        <div id="owl-reviews">
+            {% for review in data.review %}
+                <div class="item"> 
+                <div>
+                     <span class="glyphicon glyphicon-user" aria-hidden="true">  {{review.author}}:</span>    
+                </div>   
+               
+               <!--  <span class="glyphicons glyphicons-user" aria-hidden="true"></span> --> <br><br><br>
+                <div>
+                {{review.content}}
+                </div>
+                </div>
+
+            {% endfor %}
+        </div><!-- /#owl-reviews -->
+        {% endif %}  
+       
+	</div><!-- /.col-lg-12 --> 
+	</div><!-- /.row --> 
+</div><!-- /.container -->     	    
+</section><!-- /#reviews --> 
+
+
+<!-- Actor/Director Section -->
+{% elif data.type == 'searchActor' or data.type == 'searchDirector' %}
+<!-- About Section -->
+<section id="about">
+        <div class="more page-scroll" id="more">
+        </div>
+        
+<div class="container wp2">
+{% if data.type == 'searchActor' %}
+<h1 class="section-title">About the actor</h1>
+{% else %}
+<h1 class="section-title">About the director</h1>
+{% endif %}
+
+
+    <div class="row">
+        <div class="col-lg-6 wp2 delay-05s">   
+
+          <!-- <div class="movie-disc"> -->
+          <!-- <div class="movie-avatar"> -->
+                  <!-- <div class="movie-avatar-img"> -->
+                        <img src="http://image.tmdb.org/t/p/w500{{data.person.profile}}" width = 370 height = 512 >
+                  <!-- </div>/.movie-avatar-img  -->
+              <!-- </div>/.movie-disc  -->
+          <!-- </div>/.movie-avatar  -->
+
+        </div><!-- /.col-lg-6 -->
+        
+        <div class="col-lg-6 wp2 delay-1s">  
+        <h2>{{data.person.name}}<span class="text-color"></span></h2>
+      
+        
+        <TABLE class="text-dark">
+
+                <TR><TD>Birthday </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.person.birthday}}</TD></TR>
+                
+                <TR><TD>Place of Birth </TD><TD>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</TD><TD>{{data.person.place_of_birth}}</TD></TR>
+                                                                                                 
+        </TABLE>
+
+        <br>
+        <p>{{data.person.biography}} 
+        <br>
+
+        <p></p> 
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+</div><!-- /.container --> 
+</section><!-- /#about --> 
+
+<!-- Movie Section -->
+<section id="casting movies">
+<div class="container"> 
+    <div class="row">      
+    <div class="col-lg-12">
+    <h1 class="section-title">Movies</h1>
+    
+        <!-- {% set timer = 0 %}
+        {% set delay = [0, 05, 2] %} -->
+        <div id="owl-actors" class="owl-carousel owl-theme">
+            {% for m in data.movie %}
+            <div class="item" >
+                <!-- <div class="col-md-12 wp6 delay-{{delay[timer%3]}}s"> -->
+                <div class="col-md-12 wp6">
+                    
+                            <div class="actor">
+                                <div class="avatar">
+                                <img alt="img" src="http://image.tmdb.org/t/p/w500{{m.poster}}">
+                                </div>
+                                
+                                <div class="details">
+                                      <ul class="social">
+                                           <!--  <li><a href="http://fb.com/#"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="http://twitter.com/#"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="http://plus.google.com/#"><i class="fa fa-google-plus"></i></a></li> -->
+
+                                      </ul>
+                                    
+                                    <a href="{{ url_for('movie', movie_id=m.id) }}">learn more</a>  
+                                </div>
+                            </div><!-- /.actor -->                                  
+                            <div class="actor-info">
+                            <h4 class="heading">{{m.name}}</h4>
+                            <!-- <h5 class="sub-heading">Director</h5> -->
+                            </div> <!-- /.actor-info -->        
+                </div>
+            </div><!-- /.item -->
+            <!-- {% set timer = timer + 1 %} -->
+            {% endfor %} 
+                
+        </div>
+    </div><!-- /.col-lg-12 -->        
+    </div><!-- /.row --> 
+    <p></p>       
+</div><!-- /.container --> 
+</section><!-- /#actors -->     
 
 
 
@@ -543,14 +547,14 @@
             <form method="POST" action="/search">
             <div class="row123">
                 
-                <select style= "color:black" class="selectpicker" data-style="btn-primary" title="Choose one of the following...">
+                <select name="types" style= "color:black" class="selectpicker" data-style="btn-primary" title="Choose one of the following...">
                 <option value="" disabled selected>Search by</option>
                 <option value="movie">movie</option>
                 <option value="actor">actor</option>
                 <option value="director">director</option>
                 <option value="company">company</option>
                 </select>
-                <input type="text" name="name123" class="form-control123" id="input123" placeholder="Enter the name">
+                <input type="text" name="name" class="form-control123" id="input123" placeholder="Enter the name">
                 <button type="submit" class="btn btn-primary" value="Search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </div> 
             </form>
@@ -661,10 +665,10 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-6">
-                                <a href="#" class="active" id="login-form-link">Login</a>
+                                <a href="/login" class="active" id="login-form-link">Login</a>
                             </div>
                             <div class="col-xs-6">
-                                <a href="#" id="register-form-link">Register</a>
+                                <a href="/signup" id="register-form-link">Signup</a>
                             </div>
                         </div>
                         <hr>
@@ -672,26 +676,26 @@
                     <div class="panel-body" id="panel123">
                         <div class="row">
                             <div class="col-lg-12">
-                                <form id="login-form" action="\login" method="post" role="form" style="display: block;">
+                                <form id="login-form" action="/login" name="action" value="login" method="post" role="form" style="display: block;">
                                     <div class="form-group">
                                         <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
                                     </div>
-                                    <div class="form-group text-center">
+                                    <!-- <div class="form-group text-center">
                                         <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
                                         <label for="remember"> Remember Me</label>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
-                                                <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                                <input type="submit" name="action" id="login-submit" tabindex="4" class="form-control btn btn-login" value="login">
                                             </div>
                                         </div>
                                     </div>
                                 </form>
-                                <form id="register-form" action="\signup" method="POST" role="form" style="display: none;">
+                                <form id="register-form" action="/signup" name="action" value="signup" method="POST" role="form" style="display: none;">
                                     <div class="form-group">
                                         <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
                                     </div>
@@ -703,7 +707,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
-                                                <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                                                <input type="submit" name="action" id="register-submit" tabindex="4" class="form-control btn btn-register" value="signup">
                                             </div>
                                         </div>
                                     </div>

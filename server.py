@@ -209,35 +209,6 @@ def search():
 
 
 
-
-@app.route('/signup', methods=['POST'])
-def signup():
-  error = None
-  username = request.form["username"]
-  password = request.form["password"]
-
-  cursor = g.conn.execute("SELECT * FROM users WHERE username = '{0}';".format(username))
-  rows = list(cursor)
-  cursor.close()
-
-  if len(rows) != 0:
-    error = 'Username already exists!'
-  else:
-    try:
-      g.conn.execute(text("INSERT INTO users VALUES ('{0}', '{1}');".format(username, password)))
-      session['logged_in'] = True
-      session['username'] = username
-      flash('You were logged in')
-      return redirect('/')
-    except:
-      error = 'Invalid password!'
-
-  return render_template("movie.html", error=error)
-
-
-
-
-
 @app.route('/login', methods=['POST'])
 def login():
   username = request.form["username"]
