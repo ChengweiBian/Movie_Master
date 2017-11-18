@@ -64,7 +64,7 @@ def movie():
     cursor.close()
     if not movie_id:
       flash('No result found!', 'search')
-      return redirect('/')
+      return redirect(request.referrer+'#search')
     return redirect('/movie?movie_id={0}'.format(movie_id))
 
   movie_id = int(request.args.get('movie_id', None))
@@ -118,7 +118,7 @@ def director():
     cursor.close()
     if not director_id:
       flash('No result found!', 'search')
-      return redirect('/')
+      return redirect(request.referrer+'#search')
     return redirect('/director?director_id={0}'.format(director_id))
 
   director_id = int(request.args.get('director_id'))
@@ -150,7 +150,7 @@ def actor():
     cursor.close()
     if not actor_id:
       flash('No result found!', 'search')
-      return redirect('/')
+      return redirect(request.referrer+'#search')
     return redirect('/actor?actor_id={0}'.format(actor_id))
 
   actor_id = int(request.args.get('actor_id'))
@@ -182,7 +182,7 @@ def company():
     cursor.close()
     if not company_id:
       flash('No result found!', 'search')
-      return redirect('/')
+      return redirect(request.referrer+'#search')
     return redirect('/company?company_id={0}'.format(company_id))
 
   company_id = int(request.args.get('company_id'))
@@ -242,7 +242,7 @@ def login():
         session['favorite'] = []
         return redirect(request.referrer)
       except:
-        flash('Invalid password!', 'login')
+        flash('Invalid username or password!', 'login')
 
   return redirect(request.referrer+'#login')
 
